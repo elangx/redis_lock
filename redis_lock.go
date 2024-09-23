@@ -22,9 +22,6 @@ func LockRequest(ctx context.Context, redisCli *redis.Client, requestKey string,
 	key := "lock_request:" + requestKey + ":" + reqSum
 	//max life-time 3 sec
 	count, err := redisCli.SetNX(ctx, key, v, 3*time.Second).Result()
-	if errors.Is(err, redis.Nil) {
-		return nil, nil
-	}
 	if err != nil {
 		return nil, err
 	}
